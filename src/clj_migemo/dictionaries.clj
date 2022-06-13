@@ -12,8 +12,10 @@
          i 0]
     (if (>= i (count input))
       output
-      (recur (conj output (get katakana/data (subs input i (inc i))))
-             (inc i)))))
+      (let [char (subs input i (inc i))
+            converted-char (get katakana/data char)]
+        (recur (conj output converted-char)
+               (inc i))))))
 
 (defn convert-hankaku
   "半角文字を全角文字へ変換する"
@@ -23,8 +25,10 @@
          i 0]
     (if (>= i (count input))
       output
-      (recur (conj output (get hankaku/data (subs input i (inc i))))
-             (inc i)))))
+      (let [char (subs input i (inc i))
+            converted-char (get hankaku/data char)]
+        (recur (conj output converted-char)
+               (inc i))))))
 
 (defn convert-zenkaku
   "全角文字を半角文字へ変換する"
@@ -34,8 +38,10 @@
          i 0]
     (if (>= i (count input))
       output
-      (recur (conj output (get zenkaku/data (subs input i (inc i))))
-             (inc i)))))
+      (let [char (subs input i (inc i))
+            converted-char (get zenkaku/data char)]
+        (recur (conj output converted-char)
+               (inc i))))))
 
 (defn convert
   "入力文字列を変換する"
