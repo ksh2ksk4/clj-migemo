@@ -4,6 +4,7 @@
             [clj-migemo.dictionaries.hiragana :as hiragana]
             [clj-migemo.dictionaries.zenkaku :as zenkaku]))
 
+;;todo 関数が冗長なのを解決する
 (defn convert-katakana
   "ひらがなをカタカナへ変換する"
   [input]
@@ -53,5 +54,6 @@
     :katakana (convert-katakana input)
     :hankaku (convert-hankaku input)
     :zenkaku (convert-zenkaku input)
+    ;;todo エラー処理
     :else "Error"))
  
