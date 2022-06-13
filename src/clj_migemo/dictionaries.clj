@@ -47,8 +47,6 @@
 (defn convert
   "入力文字列を変換する"
   [dictionary input]
-  ;;(def foo 'clj-migemo.dictionaries.katakana/data)
-  ;;(println (get (eval foo) "あ"))
   (case dictionary
     :hiragana "Not implemented"
     :katakana (convert-katakana input)
@@ -56,4 +54,3 @@
     :zenkaku (convert-zenkaku input)
     ;;todo エラー処理
     :else "Error"))
- 
