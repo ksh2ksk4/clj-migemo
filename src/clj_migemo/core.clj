@@ -6,6 +6,8 @@
   "I don't do a whole lot ... yet."
   [& args]
   (println (dictionaries/convert :hiragana "ai"))
+  (println (dictionaries/convert :hiragana "sannma"))
+  (println (dictionaries/convert :hiragana "foo"))
   (println (dictionaries/convert :katakana "あいうえお"))
   (println (dictionaries/convert :hankaku "＠"))
   (println (dictionaries/convert :zenkaku "ﾐ")))
