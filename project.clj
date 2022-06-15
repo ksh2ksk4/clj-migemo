@@ -7,4 +7,7 @@
   :main ^:skip-aot clj-migemo.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
-                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
+                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}
+             :dev {:dependencies [[speclj "3.4.1"]]}}
+  :plugins [[speclj "3.4.1"]]
+  :test-paths ["spec"])
