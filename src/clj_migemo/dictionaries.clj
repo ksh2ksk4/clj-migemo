@@ -2,7 +2,8 @@
   (:require [clj-migemo.dictionaries.katakana :as katakana]
             [clj-migemo.dictionaries.hankaku :as hankaku]
             [clj-migemo.dictionaries.hiragana :as hiragana]
-            [clj-migemo.dictionaries.zenkaku :as zenkaku]))
+            [clj-migemo.dictionaries.zenkaku :as zenkaku]
+            [clojure.string :refer [join]]))
 
 (defn convert-hiragana
   "入力文字列をひらがなへ変換する"
@@ -12,7 +13,7 @@
          i 0
          x 1]
     (if (>= i (count input))
-      output
+      (join output)
       (let [sub-dictionary (get hiragana/data x)
             char (subs input i (+ i x))
             converted-char (get sub-dictionary char)]
@@ -34,7 +35,7 @@
   (loop [output []
          i 0]
     (if (>= i (count input))
-      output
+      (join output)
       (let [char (subs input i (inc i))
             converted-char (get katakana/data char)]
         (recur (conj output converted-char)
@@ -47,7 +48,7 @@
   (loop [output []
          i 0]
     (if (>= i (count input))
-      output
+      (join output)
       (let [char (subs input i (inc i))
             converted-char (get hankaku/data char)]
         (recur (conj output converted-char)
@@ -60,7 +61,7 @@
   (loop [output []
          i 0]
     (if (>= i (count input))
-      output
+      (join output)
       (let [char (subs input i (inc i))
             converted-char (get zenkaku/data char)]
         (recur (conj output converted-char)
