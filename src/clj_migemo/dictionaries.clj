@@ -38,7 +38,9 @@
       (join output)
       (let [char (subs input i (inc i))
             converted-char (get katakana/data char)]
-        (recur (conj output converted-char)
+        (recur (conj output (if (some? converted-char)
+                              converted-char
+                              char))
                (inc i))))))
 
 (defn convert-hankaku
@@ -51,7 +53,9 @@
       (join output)
       (let [char (subs input i (inc i))
             converted-char (get hankaku/data char)]
-        (recur (conj output converted-char)
+        (recur (conj output (if (some? converted-char)
+                              converted-char
+                              char))
                (inc i))))))
 
 (defn convert-zenkaku
@@ -64,7 +68,9 @@
       (join output)
       (let [char (subs input i (inc i))
             converted-char (get zenkaku/data char)]
-        (recur (conj output converted-char)
+        (recur (conj output (if (some? converted-char)
+                              converted-char
+                              char))
                (inc i))))))
 
 (defn convert
