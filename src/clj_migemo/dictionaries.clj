@@ -25,9 +25,17 @@
             ;; 変換対象文字列の末尾に到達した場合
             (join (conj output char))
             ;; 変換対象文字列の末尾に到達していない場合
-            (recur head
-                   (inc length)
-                   output)))))))
+            (if (some? (re-find #"[a-zA-Z]+" char))
+              ;; 変換対象文字がアルファベットの場合
+              ;;   そのまま変換処理を継続
+              (recur head
+                     (inc length)
+                     output)
+              ;; 変換対象文字にアルファベット以外が含まれている場合
+              ;;   そのまま出力して次の文字から変換処理を実行
+              (recur (+ head length)
+                     1
+                     (conj output char)))))))))
 
 ;; HACK: 関数が冗長なのを解決する
 (defn convert-katakana
