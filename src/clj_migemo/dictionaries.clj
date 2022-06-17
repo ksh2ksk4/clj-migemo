@@ -9,25 +9,25 @@
   "入力文字列をひらがなへ変換する"
   [input]
   ;; 入力文字列を一文字づつ変換
-  (loop [output []  ; 変換後の文字
-         head 0     ; 変換対象範囲の先頭位置
-         length 1]  ; 変換対象範囲の長さ
+  (loop [head 0      ; 変換対象範囲の先頭位置
+         length 1    ; 変換対象範囲の長さ
+         output []]  ; 変換後の文字
     (if (>= head (count input))
       (join output)
       (let [sub-dictionary (get hiragana/data length)
             char (subs input head (+ head length))
             converted-char (get sub-dictionary char)]
         (if (some? converted-char)
-          (recur (conj output converted-char)
-                 (+ head length)
-                 1)
+          (recur (+ head length)
+                 1
+                 (conj output converted-char))
           (if (>= length (- (count input) head))  ; 変換対象文字列の残りの文字列長
             ;; 変換対象文字列の末尾に到達した場合
             (join (conj output char))
             ;; 変換対象文字列の末尾に到達していない場合
-            (recur output
-                   head
-                   (inc length))))))))
+            (recur head
+                   (inc length)
+                   output)))))))
 
 ;; HACK: 関数が冗長なのを解決する
 (defn convert-katakana
