@@ -32,46 +32,46 @@
   "ひらがなをカタカナへ変換する"
   [input]
   ;; 入力文字列を一文字づつ変換
-  (loop [output []
-         i 0]
-    (if (>= i (count input))
+  (loop [output []  ; 変換後の文字
+         position 0]    ; 変換対象文字の位置
+    (if (>= position (count input))
       (join output)
-      (let [char (subs input i (inc i))
+      (let [char (subs input position (inc position))
             converted-char (get katakana/data char)]
         (recur (conj output (if (some? converted-char)
                               converted-char
                               char))
-               (inc i))))))
+               (inc position))))))
 
 (defn convert-hankaku
   "半角文字を全角文字へ変換する"
   [input]
   ;; 入力文字列を一文字づつ変換
-  (loop [output []
-         i 0]
-    (if (>= i (count input))
+  (loop [output []  ; 変換後の文字
+         position 0]    ; 変換対象文字の位置
+    (if (>= position (count input))
       (join output)
-      (let [char (subs input i (inc i))
+      (let [char (subs input position (inc position))
             converted-char (get hankaku/data char)]
         (recur (conj output (if (some? converted-char)
                               converted-char
                               char))
-               (inc i))))))
+               (inc position))))))
 
 (defn convert-zenkaku
   "全角文字を半角文字へ変換する"
   [input]
   ;; 入力文字列を一文字づつ変換
-  (loop [output []
-         i 0]
-    (if (>= i (count input))
+  (loop [output []  ; 変換後の文字
+         position 0]    ; 変換対象文字の位置
+    (if (>= position (count input))
       (join output)
-      (let [char (subs input i (inc i))
+      (let [char (subs input position (inc position))
             converted-char (get zenkaku/data char)]
         (recur (conj output (if (some? converted-char)
                               converted-char
                               char))
-               (inc i))))))
+               (inc position))))))
 
 (defn convert
   "入力文字列を変換する"
