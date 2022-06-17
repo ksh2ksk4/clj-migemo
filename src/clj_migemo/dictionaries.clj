@@ -15,17 +15,17 @@
     (if (>= head (count input))
       (join output)
       (let [sub-dictionary (get hiragana/data length)
-            char (subs input head (+ head length))
-            converted-char (get sub-dictionary char)]
+            chars (subs input head (+ head length))
+            converted-char (get sub-dictionary chars)]
         (if (some? converted-char)
           (recur (+ head length)
                  1
                  (conj output converted-char))
           (if (>= length (- (count input) head))  ; 変換対象文字列の残りの文字列長
             ;; 変換対象文字列の末尾に到達した場合
-            (join (conj output char))
+            (join (conj output chars))
             ;; 変換対象文字列の末尾に到達していない場合
-            (if (some? (re-find #"[a-zA-Z]+" char))
+            (if (some? (re-find #"[a-zA-Z]+" chars))
               ;; 変換対象文字がアルファベットの場合
               ;;   そのまま変換処理を継続
               (recur head
@@ -35,7 +35,7 @@
               ;;   そのまま出力して次の文字から変換処理を実行
               (recur (+ head length)
                      1
-                     (conj output char)))))))))
+                     (conj output chars)))))))))
 
 ;; HACK: 関数が冗長なのを解決する
 (defn convert-katakana
