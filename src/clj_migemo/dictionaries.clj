@@ -27,7 +27,7 @@
                  (+ i x)
                  1))))))
 
-;;todo 関数が冗長なのを解決する
+;; HACK: 関数が冗長なのを解決する
 (defn convert-katakana
   "ひらがなをカタカナへ変換する"
   [input]
@@ -81,5 +81,5 @@
     :katakana (convert-katakana input)
     :hankaku (convert-hankaku input)
     :zenkaku (convert-zenkaku input)
-    ;;todo エラー処理
+    ;; TODO: エラー処理
     :else "Error"))
