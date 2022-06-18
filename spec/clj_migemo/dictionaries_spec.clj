@@ -30,4 +30,22 @@
           (it "ﾐ => ミ"
               (should (= (dictionaries/convert :zenkaku "ﾐ") "ミ"))))
 
+(describe "入力文字列を検索対象文字列に変換"
+          (it "aiueo"
+              (should (= (dictionaries/convert :all "aiueo") ["aiueo" "ａｉｕｅｏ" "あいうえお" "アイウエオ" "ｱｲｳｴｵ"])))
+          (it "sannma"
+              (should (= (dictionaries/convert :all "sannma") ["sannma" "ｓａｎｎｍａ" "さんま" "サンマ" "ｻﾝﾏ"])))
+          (it "arigatou"
+              (should (= (dictionaries/convert :all "arigatou") ["arigatou" "ａｒｉｇａｔｏｕ" "ありがとう" "アリガトウ" "ｱﾘｶﾞﾄｳ"])))
+          (it "foo"
+              (should (= (dictionaries/convert :all "foo") ["foo" "ｆｏｏ" "ふぉお" "フォオ" "ﾌｫｵ"])))
+          (it "qsdrtgl"
+              (should (= (dictionaries/convert :all "qsdrtgl") ["qsdrtgl" "ｑｓｄｒｔｇｌ" "qsdrtgl" "qsdrtgl" "qsdrtgl"])))
+          (it "kyouha@iitennki"
+              (should (= (dictionaries/convert :all "kyouha@iitennki") ["kyouha@iitennki" "ｋｙｏｕｈａ＠ｉｉｔｅｎｎｋｉ" "きょうは@いいてんき" "キョウハ@イイテンキ" "ｷｮｳﾊ@ｲｲﾃﾝｷ"])))
+          (it "＠"
+              (should (= (dictionaries/convert :all "＠") ["＠" "＠" "＠" "＠" "@"])))
+          (it "ﾐ"
+              (should (= (dictionaries/convert :all "ﾐ") ["ﾐ" "ミ" "ﾐ" "ﾐ" "ﾐ"]))))
+
 (run-specs)
