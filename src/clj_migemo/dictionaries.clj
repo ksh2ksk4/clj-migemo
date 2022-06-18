@@ -91,5 +91,15 @@
     :katakana (convert-katakana input)
     :hankaku (convert-hankaku input)
     :zenkaku (convert-zenkaku input)
+    :all (let [zenkaku (convert-zenkaku input)
+               hiragana (convert-hiragana input)
+               katakana (convert-katakana hiragana)
+               hankaku-katakana (convert-hankaku katakana)]
+           (conj []
+                 input
+                 zenkaku
+                 hiragana
+                 katakana
+                 hankaku-katakana))
     ;; TODO: エラー処理
     :else "Error"))
