@@ -6,7 +6,7 @@
 
 (describe "入力文字列をひらがなに変換"
           (it "aiueo => あいうえお"
-              (should (= (dictionaries/convert :hiragana "sannma") "さんま")))
+              (should (= (dictionaries/convert :hiragana "aiueo") "あいうえお")))
           (it "sannma => さんま"
               (should (= (dictionaries/convert :hiragana "sannma") "さんま")))
           (it "arigatou => ありがとう"
