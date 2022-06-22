@@ -3,9 +3,28 @@
             [clj-migemo.dictionaries.hankaku :as hankaku]
             [clj-migemo.dictionaries.hiragana :as hiragana]
             [clj-migemo.dictionaries.zenkaku :as zenkaku]
-            [clojure.string :refer [join]]))
+            [clojure.string :refer [join split split-lines]]))
 
-(defn convert-hiragana
+(defonce ^:private migemo-dictionary "./resources/migemo-dict")
+
+(defrecord ^:private Item [key values])
+
+(defn- load-migemo-dictionary
+  "migemoの辞書ファイルからデータをロードする"
+  []
+  (loop [lines (split-lines (slurp migemo-dictionary))
+         current-line (first lines)
+         items []]
+    (if (nil? current-line)
+      items
+      (let [words (split current-line #"\s+")
+            item (Item. (first words) (rest words))
+            rest-of-lines (rest lines)]
+        (recur rest-of-lines
+               (first rest-of-lines)
+               (conj items item))))))
+
+(defn- convert-hiragana
   "入力文字列をひらがなへ変換する"
   [input]
   ;; 入力文字列を一文字づつ変換
@@ -38,7 +57,7 @@
                      (conj output chars)))))))))
 
 ;; HACK: 関数が冗長なのを解決する
-(defn convert-katakana
+(defn- convert-katakana
   "ひらがなをカタカナへ変換する"
   [input]
   ;; 入力文字列を一文字づつ変換
@@ -53,7 +72,7 @@
                               converted-char
                               char)))))))
 
-(defn convert-hankaku
+(defn- convert-hankaku
   "半角文字を全角文字へ変換する"
   [input]
   ;; 入力文字列を一文字づつ変換
@@ -68,7 +87,7 @@
                               converted-char
                               char)))))))
 
-(defn convert-zenkaku
+(defn- convert-zenkaku
   "全角文字を半角文字へ変換する"
   [input]
   ;; 入力文字列を一文字づつ変換
@@ -83,7 +102,7 @@
                               converted-char
                               char)))))))
 
-(defn convert
+(defn- convert
   "入力文字列を検索対象文字列に変換する"
   [dictionary input]
   (case dictionary
@@ -99,3 +118,18 @@
             :non-search-strings (conj [] zenkaku katakana hankaku-katakana)})
     ;; TODO: エラー処理
     :else "Error"))
+
+(defn lookup
+  "辞書を引く"
+  [string]
+  (let [items (load-migemo-dictionary)
+        converted-string (convert :all string)
+        search-strings (:search-strings converted-string)
+        non-search-strings (:non-search-strings converted-string)]
+    (flatten (cons (cons search-strings non-search-strings)
+                   (map (fn [x]
+                          (:values x))
+                        (filter (fn [x]
+                                  ;; contains?は配列に対して期待した動作をしない
+                                  (.contains search-strings (:key x)))
+                                items))))))
