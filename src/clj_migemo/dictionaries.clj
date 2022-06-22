@@ -84,7 +84,7 @@
                               char)))))))
 
 (defn convert
-  "入力文字列を変換する"
+  "入力文字列を検索対象文字列に変換する"
   [dictionary input]
   (case dictionary
     :hiragana (convert-hiragana input)
@@ -95,11 +95,7 @@
                hiragana (convert-hiragana input)
                katakana (convert-katakana hiragana)
                hankaku-katakana (convert-hankaku katakana)]
-           (conj []
-                 input
-                 zenkaku
-                 hiragana
-                 katakana
-                 hankaku-katakana))
+           {:search-strings (conj [] input hiragana)
+            :non-search-strings (conj [] zenkaku katakana hankaku-katakana)})
     ;; TODO: エラー処理
     :else "Error"))
