@@ -32,23 +32,31 @@
     (testing "ﾐ => ミ"
       (is (= (#'dictionaries/convert :zenkaku "ﾐ") "ミ")))))
 
-(deftest convert-to-search-string
+(deftest convert-to-search-strings
   (testing "入力文字列を検索対象文字列に変換"
     (testing "aiueo"
-      (is (= (#'dictionaries/convert :all "aiueo") ["aiueo" "ａｉｕｅｏ" "あいうえお" "アイウエオ" "ｱｲｳｴｵ"])))
+      (is (= (#'dictionaries/convert :all "aiueo") {:search-strings ["aiueo" "あいうえお"]
+                                                    :non-search-strings ["ａｉｕｅｏ"  "アイウエオ" "ｱｲｳｴｵ"]})))
     (testing "sannma"
-      (is (= (#'dictionaries/convert :all "sannma") ["sannma" "ｓａｎｎｍａ" "さんま" "サンマ" "ｻﾝﾏ"])))
+      (is (= (#'dictionaries/convert :all "sannma") {:search-strings ["sannma" "さんま"]
+                                                     :non-search-strings ["ｓａｎｎｍａ" "サンマ" "ｻﾝﾏ"]})))
     (testing "arigatou"
-      (is (= (#'dictionaries/convert :all "arigatou") ["arigatou" "ａｒｉｇａｔｏｕ" "ありがとう" "アリガトウ" "ｱﾘｶﾞﾄｳ"])))
+      (is (= (#'dictionaries/convert :all "arigatou") {:search-strings ["arigatou" "ありがとう"]
+                                                       :non-search-strings ["ａｒｉｇａｔｏｕ" "アリガトウ" "ｱﾘｶﾞﾄｳ"]})))
     (testing "foo"
-      (is (= (#'dictionaries/convert :all "foo") ["foo" "ｆｏｏ" "ふぉお" "フォオ" "ﾌｫｵ"])))
+      (is (= (#'dictionaries/convert :all "foo") {:search-strings ["foo" "ふぉお"]
+                                                  :non-search-strings ["ｆｏｏ" "フォオ" "ﾌｫｵ"]})))
     (testing "qsdrtgl"
-      (is (= (#'dictionaries/convert :all "qsdrtgl") ["qsdrtgl" "ｑｓｄｒｔｇｌ" "qsdrtgl" "qsdrtgl" "qsdrtgl"])))
+      (is (= (#'dictionaries/convert :all "qsdrtgl") {:search-strings ["qsdrtgl" "qsdrtgl"]
+                                                      :non-search-strings ["ｑｓｄｒｔｇｌ" "qsdrtgl" "qsdrtgl"]})))
     (testing "kyouha@iitennki"
-      (is (= (#'dictionaries/convert :all "kyouha@iitennki") ["kyouha@iitennki" "ｋｙｏｕｈａ＠ｉｉｔｅｎｎｋｉ" "きょうは@いいてんき" "キョウハ@イイテンキ" "ｷｮｳﾊ@ｲｲﾃﾝｷ"])))
+      (is (= (#'dictionaries/convert :all "kyouha@iitennki") {:search-strings ["kyouha@iitennki" "きょうは@いいてんき"]
+                                                              :non-search-strings ["ｋｙｏｕｈａ＠ｉｉｔｅｎｎｋｉ" "キョウハ@イイテンキ" "ｷｮｳﾊ@ｲｲﾃﾝｷ"]})))
     (testing "＠"
-      (is (= (#'dictionaries/convert :all "＠") ["＠" "＠" "＠" "＠" "@"])))
+      (is (= (#'dictionaries/convert :all "＠") {:search-strings ["＠" "＠"]
+                                                :non-search-strings ["＠" "＠" "@"]})))
     (testing "ﾐ"
-      (is (= (#'dictionaries/convert :all "ﾐ") ["ﾐ" "ミ" "ﾐ" "ﾐ" "ﾐ"])))))
+      (is (= (#'dictionaries/convert :all "ﾐ") {:search-strings ["ﾐ" "ﾐ"]
+                                                :non-search-strings ["ミ" "ﾐ" "ﾐ"]})))))
 
 (run-tests)
