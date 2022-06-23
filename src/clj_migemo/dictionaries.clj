@@ -133,3 +133,23 @@
                                   ;; contains?は配列に対して期待した動作をしない
                                   (.contains search-strings (:key x)))
                                 items))))))
+
+
+(comment
+def
+defn
+defn-
+
+defonce
+
+defmacro
+defmethod
+defmulti
+definterface
+defprotocol
+defrecord
+defstruct obsoletedなのでdefrecordを使う
+deftype
+
+definline
+)
