@@ -1,0 +1,87 @@
+* Install
+
+#+BEGIN_EXAMPLE
+$ brew install clojure
+$ clojure --version
+Clojure CLI version 1.11.1.1119
+#+END_EXAMPLE
+
+JDK の環境設定
+
+#+BEGIN_EXAMPLE
+$ sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+$ /usr/libexec/java_home -V
+Matching Java Virtual Machines (1):
+    18.0.1.1 (x86_64) "Homebrew" - "OpenJDK 18.0.1.1" /usr/local/Cellar/openjdk/18.0.1.1/libexec/openjdk.jdk/Contents/Home
+/usr/local/Cellar/openjdk/18.0.1.1/libexec/openjdk.jdk/Contents/Home
+$ java --version
+openjdk 18.0.1.1 2022-04-22
+OpenJDK Runtime Environment Homebrew (build 18.0.1.1+0)
+OpenJDK 64-Bit Server VM Homebrew (build 18.0.1.1+0, mixed mode, sharing)
+#+END_EXAMPLE
+
+.config/fish/config.fish で設定
+JAVA_HOME (/usr/libexec/java_home)
+
+#+BEGIN_EXAMPLE
+$ brew install leiningen
+$ lein --version
+Leiningen 2.9.8 on Java 18.0.1.1 OpenJDK 64-Bit Server VM
+#+END_EXAMPLE
+
+https://github.com/technomancy/leiningen
+
+VS Code に以下の拡張機能をインストール。
+
+https://marketplace.visualstudio.com/items?itemName=betterthantomorrow.calva
+
+https://github.com/clj-kondo/clj-kondo
+
+* project
+
+#+BEGIN_EXAMPLE
+$ mkdir ~/mine/srcs/Clojure
+$ cd ~/mine/srcs/Clojure
+$ lein new app clj-migemo
+$ cd clj-migemo
+$ git init
+#+END_EXAMPLE
+
+VS Code でファイルをコミット。
+
+#+BEGIN_EXAMPLE
+$ git branch -M main
+$ git remote add origin git@github.com:ksh2ksk4/clj-migemo.git
+$ git push -u origin main
+#+END_EXAMPLE
+
+
+* speclj
+
+https://github.com/slagyr/speclj
+
+イマイチな感じがした。
+
+* api? clojure.core
+
+- if
+  - then, elseがある
+  - then, else 各々で一つの命令しか実行できない
+    - なので、 do で包む必要がある
+  - else がないと clj-kondo がワーニングを出す
+- when(when-not), when-let
+  - then のみ
+  - 複数の命令を実行できる
+  - そのため、 if より使いやすいことが多い
+
+
+* todo
+
+- プロセス化
+  - socket通信
+- migemo辞書の読み込みを一回だけにする
+- API実装
+
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home
+export PATH=$PATH:${JAVA_HOME}/bin
